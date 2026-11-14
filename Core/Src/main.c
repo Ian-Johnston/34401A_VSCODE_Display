@@ -11,6 +11,7 @@
   * Upload HEX = CTRL-SHIFT-P → Tasks: Run Task → Flash Blue Pill
   * Build & Upload = CTRL-SHIFT-P → Tasks: Run Task → Build and Flash
   * Debug = F5 then F5 (ST-LINK GDB Server)
+  * Commit to github = Ctrl+Shift+G
   *
   * For use with LT7680A-R & 240x960 TFT LCD
   *
@@ -166,8 +167,8 @@ int main(void) {
     BuyDisplay_Init();                              // Initialize ST7701S BuyDisplay 3.71" driver IC
     SendAllToLT7680_LT();                           // run subs to setup LT7680 based on Levetop info
     ConfigurePWMAndSetBrightness(BACKLIGHTFULL);    // Configure Timer-1 and PWM-1 for backlighting. Settable 0-100%
-    ClearScreen();                                  // Clear the TFT
-    RightWipe();                                    // Right wipe to clear random pixels down the far right hand side
+    //ClearScreen();                                  // Clear the TFT
+    //RightWipe();                                    // Right wipe to clear random pixels down the far right hand side
 
     // For 34401A sniffing: clear any pending EXTI flag for PB13 SCK
     __HAL_GPIO_EXTI_CLEAR_IT(FP_SCK_Pin);
@@ -186,6 +187,13 @@ int main(void) {
 
     RunBluePillSpeedTestOffline();	// BluePill speed test = 1464327 approx. is normal
     ClearScreen();					// Again.....
+
+    // TEMP TEST - 1 pixel white box around the full 240x960 canvas to check visible-area alignment. Remove when done.
+    //DrawLine(0, 0, LCD_XSIZE_TFT - 1, 0, 0xFF, 0xFF, 0xFF);                                         // y = 0 edge
+    //DrawLine(0, LCD_YSIZE_TFT - 1, LCD_XSIZE_TFT - 1, LCD_YSIZE_TFT - 1, 0xFF, 0xFF, 0xFF);         // y = 959 edge
+    //DrawLine(0, 0, 0, LCD_YSIZE_TFT - 1, 0xFF, 0xFF, 0xFF);                                         // x = 0 edge
+    //DrawLine(LCD_XSIZE_TFT - 1, 0, LCD_XSIZE_TFT - 1, LCD_YSIZE_TFT - 1, 0xFF, 0xFF, 0xFF);         // x = 239 edge
+    // END TEMP TEST
 
     while (1)
     {
